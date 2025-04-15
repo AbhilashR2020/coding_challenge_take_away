@@ -1,0 +1,60 @@
+As part of our interview process we have a programming challenge. The goal is for you to get some familiarity with the kind of tech we use (the script is a very simplified version of our messaging framework).
+
+The code contains a sample survey (example_app) and a function called run_app which is partly unimplemented. Your first task is to complete the function run_app (where it says "YOUR CODE HERE") so that the survey gets executed. 
+
+Once you have completed it, your second task is to create a survey similar to example_app with a different logic. The example_app tool just loops over the message sequence, your survey should have more interesting branching.
+
+Your final task is to modify the code so that the program stores and prints the history i.e. the question asked and the answer provided by the user.
+
+A sample interaction of the program for the given example_app survey will be as shown below:
+
+sam@caj:~/programming-test-erlang $ erl
+Erlang/OTP 22 [erts-10.7.2] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe]
+
+Eshell V10.7.2  (abort with ^G)
+1> c(messaging).
+{ok,messaging}
+2> messaging:launch_app(example_app, intro).
+example_app > Choose a topic: (1) Rice (2) Cotton
+ok
+3> messaging:interact(example_app, "1").
+example_app > Rice is the seed of the grass species Oryza glaberrima or Oryza sativa.
+ok
+4> messaging:interact(example_app, "wow").
+example_app > As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia and Africa.
+ok
+5> messaging:interact(example_app, "cool").
+example_app > It is the agricultural commodity with the third-highest worldwide production, after sugarcane and maize.
+ok
+6> messaging:interact(example_app, "tell me more").
+example_app > Choose a topic: (1) Rice (2) Cotton
+ok
+7> messaging:interact(example_app, "2").          
+example_app > Cotton is a soft, fluffy staple fiber that grows in a boll, or protective case, around the seeds of the cotton plants of the genus Gossypium in the mallow family Malvaceae.
+ok
+8> messaging:interact(example_app, "amazing").
+example_app > The fiber is almost pure cellulose. Under natural conditions, the cotton bolls will increase the dispersal of the seeds.
+ok
+9> messaging:interact(example_app, "didn't know").
+example_app > Choose a topic: (1) Rice (2) Cotton
+ok
+10> messaging:show_history(example_app).
+[{intro, "2"}, {rice1, "wow"}, {rice2, "cool"}, {rice3, "tell me more"}, {cotton1, "amazing"}, {cotton2, "didn't know"}]
+ok
+
+Feel free to ask for clarifications or ask for additional requirements.  Email aramirez@precisiondev.org.
+
+Additional tasks:
+
+1) Add functionality to save the state of the app so it is retained after restarting.  Bonus points for following software engineering best practices.
+
+2) Consider the security stance of the app.  Create some code to authenticate each interaction between the app and the user.  Specifically, add code to uniquely identify a user, add code to uniquely identify a session between a user and the app.  Finally, think about how an attacker could highjack the user session, or impersonate the user, and implement a way to 
+	a) authenticate each interaction between the user and the app 
+	b) ensure that idle connections are disconnected after a certain period of time 
+
+3) Test your code changes using a standard test framework.
+
+4) Use software engineering best practices to document your work and prepare it for deployment in one or more environments.  Hint: change control, CI/CD, etc.
+
+5) EXTRA BONUS: Develop a versioning and metadata system so that changes in the app questions can be preserved.  Hint, if we change the text in question 1, how could we preserve its original value?
+
